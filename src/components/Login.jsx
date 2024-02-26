@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router'
 import { collection, getDocs } from 'firebase/firestore'
 import { GoogleAuthProvider, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { app, db } from '../redux/firebase';
+import { Link } from 'react-router-dom';
+import { Nav } from 'react-bootstrap';
 
 const Login = () => {
     const provider = new GoogleAuthProvider();
@@ -102,8 +104,8 @@ const Login = () => {
                 </p>
                 <button class="form-btn">Log in</button>
             </form>
-            <p class="sign-up-label">
-                Don't have an account?<span class="sign-up-link">Sign up</span>
+            <p class="sign-up-label d-flex">
+                Don't have an account?<Nav.Link as={Link} to="/signup" class="sign-up-link text-success">Sign up</Nav.Link>
             </p>
             <div class="buttons-container">
                 <p className='text-center fw-bolder fs-5 m-0 '>OR</p>
