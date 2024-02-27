@@ -46,18 +46,15 @@ const SignUp = () => {
             // checkUser()
             createUserWithEmailAndPassword(auth, input.email, input.password)
                 .then((userCredential) => {
-                    // console.log(userCredential);
                     let user = auth.currentUser
-
                     updateProfile(auth.currentUser, {
                         displayName: input.username
-                    }).then(() => {
-                        // console.log(user.data())
+                    }).then(async () => {
                         console.log(userCredential.user)
-                        // Profile updated!
+                        // const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
+                        // let user = await user
                     }).catch((error) => {
                         console.log(error)
-                        // An error occurred
                     });
 
                     navigate('/login')
