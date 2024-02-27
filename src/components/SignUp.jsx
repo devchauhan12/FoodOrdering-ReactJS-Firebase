@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import { app } from '../redux/firebase';
-import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth';
 import { Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ const SignUp = () => {
     const auth = getAuth(app)
 
     const initial = {
-        name: '',
+        username: '',
         email: '',
         password: '',
     }
@@ -25,6 +25,9 @@ const SignUp = () => {
     function validate() {
         let error = {}
 
+        if (input.username.length < 1) {
+            error.username = 'Enter Your Username'
+        }
         if (input.email.length < 1) {
             error.email = 'Enter Your Email'
         }
@@ -41,6 +44,24 @@ const SignUp = () => {
             setErrors(checkErrors)
         } else {
             // checkUser()
+            createUserWithEmailAndPassword(auth, input.email, input.password)
+                .then((userCredential) => {
+                    // console.log(userCredential);
+                    let user = auth.currentUser
+
+                    updateProfile(auth.currentUser, {
+                        displayName: input.username
+                    }).then(() => {
+                        // console.log(user.data())
+                        console.log(userCredential.user)
+                        // Profile updated!
+                    }).catch((error) => {
+                        console.log(error)
+                        // An error occurred
+                    });
+
+                    navigate('/login')
+                })
             setErrors({})
             setInput(initial)
         }
@@ -50,32 +71,24 @@ const SignUp = () => {
         e.preventDefault();
         setErrors('');
 
-        if (!validate()) {
-            return;
-        }
 
-        createUserWithEmailAndPassword(auth, input.email, input.password)
-            .then((userCredential) => {
-                console.log(userCredential);
-                navigate('/login')
-            })
-            .catch((err) => {
-                console.error(err);
-                setErrors(err.message);
-            });
+
+
     };
     return (
-        <div class="form-container mx-auto mt-4">
-            <p class="title">Welcome back</p>
-            <form class="form" onSubmit={(e) => handleSignUp(e)}>
-                <input type="email" class="input" name='email' placeholder="Email" value={input.email} onChange={handleChange} />
+        <div className="form-container mx-auto mt-4">
+            <p className="title">Welcome</p>
+            <form className="form" onSubmit={(e) => handleSubmit(e)}>
+                <input type="text" className="input" name='username' placeholder="Username" value={input.username} onChange={handleChange} />
+                {errors.username && <span>{errors.username}</span>}
+                <input type="email" className="input" name='email' placeholder="Email" value={input.email} onChange={handleChange} />
                 {errors.email && <span>{errors.email}</span>}
-                <input type="password" class="input" name='password' placeholder="Password" value={input.password} onChange={handleChange} />
+                <input type="password" className="input" name='password' placeholder="Password" value={input.password} onChange={handleChange} />
                 {errors.password && <span>{errors.password}</span>}
-                <button class="form-btn">Sign up</button>
+                <button className="form-btn">Sign up</button>
             </form>
-            <p class="sign-up-label d-flex">
-                Already have an account?<Nav.Link as={Link} to="/" class="sign-up-link text-success">Sign up</Nav.Link>
+            <p className="sign-up-label d-flex">
+                Already have an account?<Nav.Link as={Link} to="/" className="sign-up-link text-success">Login</Nav.Link>
             </p>
 
         </div>
