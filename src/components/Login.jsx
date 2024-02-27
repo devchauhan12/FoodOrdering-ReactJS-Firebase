@@ -58,7 +58,7 @@ const Login = () => {
                     showConfirmButton: false,
                     timer: 1700
                 });
-                navigate('/dashboard')
+                navigate('/')
             })
             .catch((error) => {
                 const errorCode = error.code;

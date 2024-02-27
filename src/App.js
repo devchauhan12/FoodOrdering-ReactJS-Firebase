@@ -25,7 +25,7 @@ function App() {
   const getProducts = async () => {
     const productRef = collection(db, `Products`)
     let products = await getDocs(productRef);
-    console.log(products.docs[0].data())
+    // console.log(products.docs[0].data())
 
     // if (user.user.length > 0) {
     //   console.log(user.user.length)
@@ -35,15 +35,15 @@ function App() {
   }
   const getData = async () => {
     const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
-    let user = (await getDoc(userRef)).data();
+    let user = (await getDoc(userRef)).data().user;
     // const productRef = doc(db, `Products`)
     // let products = (await getDoc(productRef)).data();
     // console.log(products)
 
-    if (user.user.length > 0) {
-      console.log(user.user.length)
-      setLogin(true)
-      setLogedUser(user)
+    if (Object.keys(user).length > 0) {
+      console.log(user)
+      // setLogin(true)
+      // setLogedUser(user)
     }
   }
   return (

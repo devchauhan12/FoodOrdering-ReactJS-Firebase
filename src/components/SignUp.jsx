@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
-import { app } from '../redux/firebase';
+import { app, db } from '../redux/firebase';
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth';
 import { Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
 
 const SignUp = () => {
     const provider = new GoogleAuthProvider();
@@ -46,13 +47,11 @@ const SignUp = () => {
             // checkUser()
             createUserWithEmailAndPassword(auth, input.email, input.password)
                 .then((userCredential) => {
-                    let user = auth.currentUser
                     updateProfile(auth.currentUser, {
                         displayName: input.username
                     }).then(async () => {
-                        console.log(userCredential.user)
-                        // const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
-                        // let user = await user
+                        const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
+                        await setDoc(userRef, { user: { uid: auth.currentUser.uid, displayName: input.username, email: input.email } })
                     }).catch((error) => {
                         console.log(error)
                     });
