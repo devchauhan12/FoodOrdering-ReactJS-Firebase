@@ -8,20 +8,27 @@ import { useSelector } from 'react-redux';
 import { authentication } from '../App';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import { db } from '../redux/firebase';
+import { doc, setDoc } from 'firebase/firestore';
+import { getAuth, signOut } from 'firebase/auth';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const Header = () => {
-    const cart = useSelector((state) => state.cart)
+    // const cart = useSelector((state) => state.cart)
+    const auth = getAuth();
 
     const { login, setLogin } = useContext(authentication)
     const { logedUser, setLogedUser } = useContext(authentication)
     const navigate = useNavigate();
-    const handleLogout = () => {
-        // setLogin(false);
+    const handleLogout = async () => {
+        setLogin(false);
+        const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
+        await setDoc(userRef, { user: {} })
+        await signOut(auth)
         // setLogedUser(null)
         // axios.put('http://localhost:3001/LoggedIn', {});
         // dispatch(deleteItem());
-        // navigate('/')
+        navigate('/')
     }
     return (
         <Navbar expand="lg" className="navbar-dark bg-dark">
@@ -47,15 +54,15 @@ const Header = () => {
                             </>
                                 :
                                 <>
-                                    <Nav.Link as={Link} to="/cart" className='card-button me-4 position-relative d-block text-white'>
+                                    <Nav.Link as={Link} to="/cart" className='card-button mx-3 position-relative d-flex text-white'>
                                         <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            {logedUser.cart.length}
+                                            {/* {logedUser.cart.length} */}
                                         </span>
-                                        <i className="las la-shopping-cart"></i>
+                                        <i className="las la-shopping-cart fs-2 align-self-center"></i>
                                     </Nav.Link>
-                                    <button onClick={handleLogout}>
-                                        Log Out
-                                    </button>
+                                    <Button onClick={handleLogout} className='d-flex'>
+                                        <span className='me-1'>Log</span> <span>Out</span>
+                                    </Button>
                                 </>
 
                         }

@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import Header from './components/Header';
 import './assets/login.css'
 import Login from './components/Login';
@@ -9,6 +9,7 @@ import { getAuth } from 'firebase/auth';
 import { app, db } from './redux/firebase';
 import Dashboard from './components/Dashboard';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import Products from './components/Products';
 
 export const authentication = createContext()
 
@@ -16,7 +17,8 @@ function App() {
   const [users, setUsers] = useState([])
   const [login, setLogin] = useState(false)
   const [logedUser, setLogedUser] = useState(null)
-  let auth = getAuth(app)
+  // let auth = getAuth(app)
+  // const navigate = useNavigate()
   useEffect(() => {
     getData()
     getProducts()
@@ -41,9 +43,9 @@ function App() {
     // console.log(products)
 
     if (Object.keys(user).length > 0) {
-      console.log(user)
-      // setLogin(true)
-      // setLogedUser(user)
+      setLogin(true)
+      setLogedUser(user)
+      // navigate('/')
     }
   }
   return (
@@ -59,12 +61,12 @@ function App() {
                   <Route path='/' element={<Login />} />
                   <Route path='/login' element={<Login />} />
                   <Route path='/signup' element={<SignUp />} />
-                  {/* <Route path='/products' element={<Product />} /> */}
+                  <Route path='/products' element={<Products />} />
                 </>
               ) : (
                 <>
                   <Route path='/' element={<Dashboard />} />
-                  {/* <Route path='/products' element={<Product />} /> */}
+                  <Route path='/products' element={<Products />} />
                   {/* <Route path='/cart' element={<Cart />} /> */}
                 </>
               )

@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
 import { GoogleAuthProvider, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { app, db } from '../redux/firebase';
 import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
+import { authentication } from '../App';
 
 const Login = () => {
     const provider = new GoogleAuthProvider();
     const auth = getAuth(app)
+    const { login, setLogin } = useContext(authentication)
 
     const initial = {
-        name: '',
         email: '',
         password: '',
     }
@@ -45,12 +46,13 @@ const Login = () => {
             checkUser()
             setErrors({})
             setInput(initial)
+
         }
     }
 
     const checkUser = () => {
         signInWithEmailAndPassword(auth, input.email, input.password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 Swal.fire({
                     title: "Login Successfully !",
                     text: "Visit our home page...",
@@ -58,6 +60,9 @@ const Login = () => {
                     showConfirmButton: false,
                     timer: 1700
                 });
+                const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
+                await setDoc(userRef, { user: { uid: auth.currentUser.uid, displayName: input.username, email: input.email } });
+                setLogin(true)
                 navigate('/')
             })
             .catch((error) => {
@@ -77,7 +82,18 @@ const Login = () => {
 
     const GoogleLogin = () => {
         signInWithPopup(auth, provider)
-            .then((result) => {
+            .then(async (result) => {
+                console.log(result.user)
+                const cartRef = doc(db, `UserCart/${result.user.uid}`);
+                let userCart = (await getDoc(cartRef)).data();
+                // console.log(user)
+                if (userCart === undefined) {
+                    await setDoc(doc(db, "UserCart", result.user.uid), { cart: [] });
+                }else{
+                    console.log('hii')
+                }
+                const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
+                await setDoc(userRef, { user: { uid: result.user.uid, displayName: result.user.displayName, email: result.user.email } });
                 Swal.fire({
                     title: "Login Successfully !",
                     text: "Visit our home page...",
@@ -85,7 +101,8 @@ const Login = () => {
                     showConfirmButton: false,
                     timer: 1700
                 });
-                navigate('/dashboard')
+                setLogin(true)
+                navigate('/')
             }).catch((error) => {
                 console.log(error);
             })

@@ -1,17 +1,20 @@
-import { getAuth } from 'firebase/auth'
-import React, { useEffect } from 'react'
-import { app } from '../redux/firebase'
+import React, { useEffect, useState } from 'react'
+import { db } from '../redux/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 const Dashboard = () => {
-    let auth = getAuth(app)
+  const [name, setName] = useState()
   useEffect(() => {
     getData()
   }, [])
-  const getData = () => {
-    console.log(auth.currentUser)
+
+  const getData = async () => {
+    const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
+    let user = (await getDoc(userRef)).data().user;
+    setName(user.displayName)
   }
   return (
-    <div>Dashboard</div>
+    <div>Welcome {name}</div>
   )
 }
 

@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router';
 import { app, db } from '../redux/firebase';
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth';
 import { Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { authentication } from '../App';
 
 const SignUp = () => {
     const provider = new GoogleAuthProvider();
@@ -51,26 +52,17 @@ const SignUp = () => {
                         displayName: input.username
                     }).then(async () => {
                         const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
-                        await setDoc(userRef, { user: { uid: auth.currentUser.uid, displayName: input.username, email: input.email } })
+                        await setDoc(userRef, { user: { uid: auth.currentUser.uid, displayName: input.username, email: input.email } });
+                        await setDoc(doc(db, "UserCart", auth.currentUser.uid), { cart: [] });
                     }).catch((error) => {
                         console.log(error)
                     });
-
-                    navigate('/login')
                 })
+            navigate('/login')
             setErrors({})
             setInput(initial)
         }
     }
-
-    const handleSignUp = (e) => {
-        e.preventDefault();
-        setErrors('');
-
-
-
-
-    };
     return (
         <div className="form-container mx-auto mt-4">
             <p className="title">Welcome</p>
