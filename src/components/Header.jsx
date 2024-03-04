@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-// import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
@@ -11,10 +10,9 @@ import { Button } from 'react-bootstrap';
 import { db } from '../redux/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { getAuth, signOut } from 'firebase/auth';
-// import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const Header = () => {
-    // const cart = useSelector((state) => state.cart)
+    const cart = useSelector((state) => state.cart)
     const auth = getAuth();
 
     const { login, setLogin } = useContext(authentication)
@@ -56,7 +54,7 @@ const Header = () => {
                                 <>
                                     <Nav.Link as={Link} to="/cart" className='card-button mx-3 position-relative d-flex text-white'>
                                         <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            {/* {logedUser.cart.length} */}
+                                            {cart && cart.length}
                                         </span>
                                         <i className="las la-shopping-cart fs-2 align-self-center"></i>
                                     </Nav.Link>

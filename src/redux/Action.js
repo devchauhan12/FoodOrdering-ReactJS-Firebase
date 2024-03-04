@@ -1,4 +1,4 @@
-
+// Handle Data 
 export const add = (id) => {
     return (dispatch) => {
         dispatch({
@@ -7,16 +7,6 @@ export const add = (id) => {
         })
     }
 }
-
-export const getCart = (data) => {
-    return (dispatch) => {
-        dispatch({
-            type: 'getCart',
-            payload: data,
-        })
-    }
-}
-
 export const incrementItem = (id) => {
     return (dispatch) => {
         dispatch({
@@ -37,6 +27,25 @@ export const deleteItem = () => {
     return (dispatch) => {
         dispatch({
             type: "delete",
+        })
+    }
+}
+
+// Fetch Data
+
+export const getCart = (data) => {
+    return (dispatch) => {
+        dispatch({
+            type: 'getCart',
+            payload: data,
+        })
+    }
+}
+export const getProducts = (data) => {
+    return (dispatch) => {
+        dispatch({
+            type: 'getProducts',
+            payload: data,
         })
     }
 }

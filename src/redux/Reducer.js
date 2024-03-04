@@ -3,32 +3,7 @@ import img2 from '../assets/Images/adidas-campus.png'
 import img3 from '../assets/Images/Puma.png'
 
 const initial = {
-    products: [
-        {
-            title: "Nike Shoes",
-            price: 5000,
-            img: img1,
-            variant: {
-                size: ["7", "8", "9", "10", "11"]
-            }
-        },
-        {
-            title: "Adidas Shoes",
-            price: 2000,
-            img: img2,
-            variant: {
-                size: ["6", "7", "8", "9", "10"]
-            }
-        },
-        {
-            title: "Puma Shoes",
-            price: 3000,
-            img: img3,
-            variant: {
-                size: ["6", "7", "8", "9", "10"]
-            }
-        }
-    ],
+    products: [],
     cart: []
 }
 
@@ -61,10 +36,6 @@ const Reducer = (state = initial, action) => {
         case 'increment':
             tempCart[action.payload].qty++;
             return { ...state, cart: tempCart };
-        case 'getCart':
-            // tempCart = ;
-            console.log(action.payload)
-            return { ...state, cart: action.payload };
         case 'decrement':
             tempCart[action.payload].qty--;
             if (tempCart[action.payload].qty === 0) { tempCart.splice([action.payload], 1) }
@@ -72,6 +43,14 @@ const Reducer = (state = initial, action) => {
         case 'delete':
             tempCart = [];
             return { ...state, cart: tempCart };
+        case 'getCart':
+            // tempCart = ;
+            console.log(action.payload)
+            return { ...state, cart: action.payload };
+        case 'getProducts':
+            // tempCart = ;
+            console.log(action.payload)
+            return { ...state, products: action.payload };
         default:
             return state
     }

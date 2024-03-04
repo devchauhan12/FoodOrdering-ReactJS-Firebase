@@ -7,6 +7,8 @@ import { app, db } from '../redux/firebase';
 import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 import { authentication } from '../App';
+import { useDispatch } from 'react-redux';
+import { getCart } from '../redux/Action';
 
 const Login = () => {
     const provider = new GoogleAuthProvider();
@@ -19,6 +21,7 @@ const Login = () => {
     }
     const [input, setInput] = useState(initial)
     const [errors, setErrors] = useState({})
+    const dispatch = useDispatch()
     const handleChange = (e) => {
         const { name, value } = e.target;
         setInput({ ...input, [name]: value });
@@ -83,14 +86,16 @@ const Login = () => {
     const GoogleLogin = () => {
         signInWithPopup(auth, provider)
             .then(async (result) => {
-                console.log(result.user)
+                // console.log(result.user)
                 const cartRef = doc(db, `UserCart/${result.user.uid}`);
                 let userCart = (await getDoc(cartRef)).data();
                 // console.log(user)
                 if (userCart === undefined) {
                     await setDoc(doc(db, "UserCart", result.user.uid), { cart: [] });
-                }else{
-                    console.log('hii')
+                } else {
+                    let cart = (await getDoc(doc(db, `UserCart/${result.user.uid}`))).data()
+                    console.log(cart.cart)
+                    dispatch(getCart(cart.cart))
                 }
                 const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
                 await setDoc(userRef, { user: { uid: result.user.uid, displayName: result.user.displayName, email: result.user.email } });

@@ -10,6 +10,7 @@ import { app, db } from './redux/firebase';
 import Dashboard from './components/Dashboard';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import Products from './components/Products';
+import { useDispatch } from 'react-redux';
 
 export const authentication = createContext()
 
@@ -17,6 +18,7 @@ function App() {
   const [users, setUsers] = useState([])
   const [login, setLogin] = useState(false)
   const [logedUser, setLogedUser] = useState(null)
+  const dispatch = useDispatch()
   // let auth = getAuth(app)
   // const navigate = useNavigate()
   useEffect(() => {
@@ -26,21 +28,19 @@ function App() {
 
   const getProducts = async () => {
     const productRef = collection(db, `Products`)
-    let products = await getDocs(productRef);
-    // console.log(products.docs[0].data())
+    let productList = await getDocs(productRef);
+    // console.log(productList.docs[0].id)
 
-    // if (user.user.length > 0) {
-    //   console.log(user.user.length)
-    //   setLogin(true)
-    //   setLogedUser(user)
-    // }
+    let products = productList.docs.map((item) => {
+      console.log(item.id)
+      return item.data()
+    })
+    // dispatch(getProducts(products))
+
   }
   const getData = async () => {
     const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
     let user = (await getDoc(userRef)).data().user;
-    // const productRef = doc(db, `Products`)
-    // let products = (await getDoc(productRef)).data();
-    // console.log(products)
 
     if (Object.keys(user).length > 0) {
       setLogin(true)
