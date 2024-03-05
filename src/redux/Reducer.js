@@ -47,7 +47,7 @@ const Reducer = (state = initial, action) => {
             // tempCart = ;
             console.log(action.payload)
             return { ...state, cart: action.payload };
-        case 'getProducts':
+        case 'setProducts':
             // tempCart = ;
             console.log(action.payload)
             return { ...state, products: action.payload };

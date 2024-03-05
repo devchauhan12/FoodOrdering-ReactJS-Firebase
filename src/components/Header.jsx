@@ -16,7 +16,6 @@ const Header = () => {
     const auth = getAuth();
 
     const { login, setLogin } = useContext(authentication)
-    const { logedUser, setLogedUser } = useContext(authentication)
     const navigate = useNavigate();
     const handleLogout = async () => {
         setLogin(false);
@@ -29,7 +28,7 @@ const Header = () => {
         navigate('/')
     }
     return (
-        <Navbar expand="lg" className="navbar-dark bg-dark">
+        <Navbar expand="lg" className="navbar-dark bg-dark py-3">
             <Container fluid>
                 <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />

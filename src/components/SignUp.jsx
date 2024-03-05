@@ -1,14 +1,12 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router';
 import { app, db } from '../redux/firebase';
-import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth';
 import { Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
-import { authentication } from '../App';
 
 const SignUp = () => {
-    const provider = new GoogleAuthProvider();
     const auth = getAuth(app)
 
     const initial = {

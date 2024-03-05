@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { db } from '../redux/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { authentication } from '../App';
 
 const Dashboard = () => {
-  const [name, setName] = useState()
-  useEffect(() => {
-    getData()
-  }, [])
-
-  const getData = async () => {
-    const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
-    let user = (await getDoc(userRef)).data().user;
-    setName(user.displayName)
-  }
+  const { logedUser, setLogedUser } = useContext(authentication)
   return (
-    <div>Welcome {name}</div>
+    <div>Welcome {logedUser.displayName}</div>
   )
 }
 

@@ -41,10 +41,10 @@ export const getCart = (data) => {
         })
     }
 }
-export const getProducts = (data) => {
+export const setProducts = (data) => {
     return (dispatch) => {
         dispatch({
-            type: 'getProducts',
+            type: 'setProducts',
             payload: data,
         })
     }
