@@ -22,33 +22,6 @@ h1 {
     color: black;
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-a {
-    text-decoration: none;
-}
-
-.main {
-    padding: 2rem 0;
-}
-
-.main-inner {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    max-width: 1200px;
-    margin-left: 2.5rem;
-    margin-right: 2.5rem;
-    align-items: center;
-    gap: 2rem;
-}
-
-article {
-    background-color: white;
-}
-
 .heading {
     position: relative;
     margin: 0 2.5rem;
@@ -66,90 +39,108 @@ article {
 
 .card {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5rem 2rem;
-    border-radius: 1rem;
+    width: 320px;
+    height: 480px;
+    background: #191919;
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 1px 3px 7px 3px #af202029;
+    /* margin: 0 5rem; */
 }
 
-.img-box {
-    width: 180px;
-    height: auto;
-    padding: 3rem 0;
-    transition: 0.5s;
-}
-
-.s-name {
+.card::before {
+    content: "";
     position: absolute;
-    left: -25%;
-    top: 0;
-    width: 3.5rem;
+    top: -50%;
+    width: 100%;
     height: 100%;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    letter-spacing: 2px;
-    text-align: center;
-    background-color: var(--dark-color);
-    color: var(--main);
-    font-weight: bold;
+    background: #ffce00;
+    transform: skewY(345deg);
     transition: 0.5s;
 }
 
-.icons {
-    font-size: 1.5rem;
-    color: var(--dark-color);
+.card:hover::before {
+    top: -70%;
+    transform: skewY(390deg);
 }
 
-.icons:hover {
-    color: var(--main);
+.card::after {
+    content: "CORSAIR";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-weight: 600;
+    font-size: 6em;
+    color: rgba(0, 0, 0, 0.1);
 }
 
-.price-box {
+.card .imgBox {
+    position: relative;
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    z-index: 1;
+}
+
+/*
+  .card .imgBox img {
+      max-width: 100%;
+      
+      transition: .5s;
+  }
+  
+  .card:hover .imgBox img {
+      max-width: 50%;
+        
+  }
+  */
+.card .contentBox {
+    position: relative;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 2;
+}
+
+.card .contentBox h3 {
+    font-size: 18px;
+    color: white;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card .contentBox .price {
+    font-size: 24px;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.card .contentBox .buy {
+    position: relative;
+    top: 100px;
+    opacity: 0;
+    padding: 10px 30px;
+    margin-top: 15px;
+    color: #000000;
+    text-decoration: none;
+    background: #ffce00;
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     transition: 0.5s;
 }
 
-.sprice {
-    display: block;
-    text-align: center;
+.card:hover .contentBox .buy {
+    top: -10%;
+    opacity: 1;
 }
 
-.cprice {
-    color: var(--main);
-    margin-bottom: 0.25rem;
-}
-
-.price {
-    font-weight: bold;
-}
-
-.card:hover .s-name {
-    left: 0;
-}
-
-.card:hover .img-box {
-    transform: rotate(330deg);
-    margin-left: 3.5rem;
-}
-
-.card:hover .price-box {
-    margin-left: 3.5rem;
-    padding: 0 1.5rem;
-}
-
-@media screen and (min-width: 1200px) {
-    .heading {
-        margin: 0 5rem;
-    }
-
-    .main-inner {
-        margin-left: auto;
-        margin-right: auto;
-    }
+.mouse {
+    height: 300px;
+    width: auto;
 }

@@ -1,200 +1,63 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import '../assets/product.css'
-import img1 from '../assets/Images/nike-shoes.png'
+// import img1 from '../assets/Images/nike-shoes.png'
 
 const Products = () => {
   const products = useSelector((state) => state.products)
   return (
     <>
-      <h1 className="heading">BUY SHOES</h1>
+      <h1 className="heading">Gaming Mouse</h1>
       <br />
-      <main className="main main-inner">
-        <article className="card">
-          <div className="img-box">
-            <img src={`https://pngimg.com/d/running_shoes_PNG5816.png`} />
-          </div>
-          <div className="s-name">
-            <p>EXCLUSIVE SNEAKERS</p>
+      <div className="container d-flex justify-content-around">
+        {/* <div class="card">
+          <div class="imgBox">
+            <img src="https://assets.corsair.com/image/upload/c_pad,q_auto,h_1024,w_1024/products/Gaming-Mice/CH-9306011-EU/Gallery/NIGHTSWORD_RGB_01.webp?width=1920&quality=85&auto=webp&format=pjpg" alt="mouse corsair" class="mouse" />
           </div>
 
-          <div className="price-box">
-            <a href="" className="icons">
-              <ion-icon name="heart-outline"></ion-icon>
-            </a>
-            <div>
-              <span className="sprice cprice">$876.00</span>
-              <span className="sprice price">$499</span>
+          <div class="contentBox">
+            <h3>Mouse Corsair M75</h3>
+            <h2 class="price">₹ 6199</h2>
+            <a href="#" class="buy">Buy Now</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="imgBox">
+            <img src="https://assets.corsair.com/image/upload/c_pad,q_auto,h_1024,w_1024/products/Gaming-Mice/CH-931A011/DARKSTAR_WIRELESS_01.webp?width=1080&quality=85&auto=webp&format=pjpg" alt="mouse corsair" class="mouse" />
+          </div>
+
+          <div class="contentBox">
+            <h3>Mouse Corsair M65</h3>
+            <h2 class="price">₹7299</h2>
+            <a href="#" class="buy">Buy Now</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="imgBox">
+            <img src="https://assets.corsair.com/image/upload/c_pad,q_auto,h_1024,w_1024/products/Gaming-Mice/base-m65-rgb-ultra-wireless-2-config/Gallery/M65_RGB_ULTRA_WIRELESS_WHT_01.webp?width=1920&quality=85&auto=webp&format=pjpg" alt="mouse corsair" class="mouse" />
+          </div>
+
+          <div class="contentBox">
+            <h3>Mouse Corsair M85</h3>
+            <h2 class="price">₹11599</h2>
+            <a href="#" class="buy">Buy Now</a>
+          </div>
+        </div> */}
+
+        {products && products.map((item) => {
+          return (<div class="card">
+            <div class="imgBox">
+              <img src={item.image} alt="mouse corsair" class="mouse" />
             </div>
-            <a href="" className="icons">
-              <ion-icon name="cart-outline"></ion-icon>
-            </a>
-          </div>
 
-        </article>
-
-        <article className="card">
-          <div className="img-box">
-            <img src={`https://toppng.com/uploads/preview/running-shoes-11530959173kylrtsdxie.png`} />
-          </div>
-          <div className="s-name">
-            <p>EXCLUSIVE SNEAKERS</p>
-          </div>
-
-          <div className="price-box">
-            <a href="" className="icons">
-              <ion-icon name="heart-outline"></ion-icon>
-            </a>
-            <div>
-              <span className="sprice cprice">$876.00</span>
-              <span className="sprice price">$499</span>
+            <div class="contentBox">
+              <h3>{item.title}</h3>
+              <h2 class="price">₹{item.price}</h2>
+              <button href="#" class="buy">Buy Now</button>
             </div>
-            <a href="" className="icons">
-              <ion-icon name="cart-outline"></ion-icon>
-            </a>
-          </div>
-
-        </article>
-
-        <article className="card">
-          <div className="img-box">
-            <img src="images/img3.png" />
-          </div>
-          <div className="s-name">
-            <p>EXCLUSIVE SNEAKERS</p>
-          </div>
-
-          <div className="price-box">
-            <a href="" className="icons">
-              <ion-icon name="heart-outline"></ion-icon>
-            </a>
-            <div>
-              <span className="sprice cprice">$876.00</span>
-              <span className="sprice price">$499</span>
-            </div>
-            <a href="" className="icons">
-              <ion-icon name="cart-outline"></ion-icon>
-            </a>
-          </div>
-
-        </article>
-
-        <article className="card">
-          <div className="img-box">
-            <img src="images/img4.png" />
-          </div>
-          <div className="s-name">
-            <p>EXCLUSIVE SNEAKERS</p>
-          </div>
-
-          <div className="price-box">
-            <a href="" className="icons">
-              <ion-icon name="heart-outline"></ion-icon>
-            </a>
-            <div>
-              <span className="sprice cprice">$876.00</span>
-              <span className="sprice price">$499</span>
-            </div>
-            <a href="" className="icons">
-              <ion-icon name="cart-outline"></ion-icon>
-            </a>
-          </div>
-
-        </article>
-
-        <article className="card">
-          <div className="img-box">
-            <img src="images/img1.png" />
-          </div>
-          <div className="s-name">
-            <p>EXCLUSIVE SNEAKERS</p>
-          </div>
-
-          <div className="price-box">
-            <a href="" className="icons">
-              <ion-icon name="heart-outline"></ion-icon>
-            </a>
-            <div>
-              <span className="sprice cprice">$876.00</span>
-              <span className="sprice price">$499</span>
-            </div>
-            <a href="" className="icons">
-              <ion-icon name="cart-outline"></ion-icon>
-            </a>
-          </div>
-
-        </article>
-
-        <article className="card">
-          <div className="img-box">
-            <img src="images/img2.png" />
-          </div>
-          <div className="s-name">
-            <p>EXCLUSIVE SNEAKERS</p>
-          </div>
-
-          <div className="price-box">
-            <a href="" className="icons">
-              <ion-icon name="heart-outline"></ion-icon>
-            </a>
-            <div>
-              <span className="sprice cprice">$876.00</span>
-              <span className="sprice price">$499</span>
-            </div>
-            <a href="" className="icons">
-              <ion-icon name="cart-outline"></ion-icon>
-            </a>
-          </div>
-
-        </article>
-
-        <article className="card">
-          <div className="img-box">
-            <img src="images/img3.png" />
-          </div>
-          <div className="s-name">
-            <p>EXCLUSIVE SNEAKERS</p>
-          </div>
-
-          <div className="price-box">
-            <a href="" className="icons">
-              <ion-icon name="heart-outline"></ion-icon>
-            </a>
-            <div>
-              <span className="sprice cprice">$876.00</span>
-              <span className="sprice price">$499</span>
-            </div>
-            <a href="" className="icons">
-              <ion-icon name="cart-outline"></ion-icon>
-            </a>
-          </div>
-
-        </article>
-
-        <article className="card">
-          <div className="img-box">
-            <img src="images/img4.png" />
-          </div>
-          <div className="s-name">
-            <p>EXCLUSIVE SNEAKERS</p>
-          </div>
-
-          <div className="price-box">
-            <a href="" className="icons">
-              <ion-icon name="heart-outline"></ion-icon>
-            </a>
-            <div>
-              <span className="sprice cprice">$876.00</span>
-              <span className="sprice price">$499</span>
-            </div>
-            <a href="" className="icons">
-              <ion-icon name="cart-outline"></ion-icon>
-            </a>
-          </div>
-
-        </article>
-
-      </main>
+          </div>)
+        })}
+      </div>
     </>
   )
 }
