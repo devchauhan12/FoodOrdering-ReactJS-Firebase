@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap");
+
+:root {
+    --dark-color: #161616;
+    --main: #83ecc6;
+    --body-font: "Open Sans";
+}
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--main);
+    color: var(--dark-color);
+    font-family: var(--body-font);
+}
+
+h1 {
+    color: black;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+.main {
+    padding: 2rem 0;
+}
+
+.main-inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    max-width: 1200px;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    align-items: center;
+    gap: 2rem;
+}
+
+article {
+    background-color: white;
+}
+
+.heading {
+    position: relative;
+    margin: 0 2.5rem;
+}
+
+.heading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 72px;
+    height: 5px;
+    background-color: black;
+    margin-left: 0.45rem;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 1px 3px 7px 3px #af202029;
+}
+
+.img-box {
+    width: 180px;
+    height: auto;
+    padding: 3rem 0;
+    transition: 0.5s;
+}
+
+.s-name {
+    position: absolute;
+    left: -25%;
+    top: 0;
+    width: 3.5rem;
+    height: 100%;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    letter-spacing: 2px;
+    text-align: center;
+    background-color: var(--dark-color);
+    color: var(--main);
+    font-weight: bold;
+    transition: 0.5s;
+}
+
+.icons {
+    font-size: 1.5rem;
+    color: var(--dark-color);
+}
+
+.icons:hover {
+    color: var(--main);
+}
+
+.price-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    transition: 0.5s;
+}
+
+.sprice {
+    display: block;
+    text-align: center;
+}
+
+.cprice {
+    color: var(--main);
+    margin-bottom: 0.25rem;
+}
+
+.price {
+    font-weight: bold;
+}
+
+.card:hover .s-name {
+    left: 0;
+}
+
+.card:hover .img-box {
+    transform: rotate(330deg);
+    margin-left: 3.5rem;
+}
+
+.card:hover .price-box {
+    margin-left: 3.5rem;
+    padding: 0 1.5rem;
+}
+
+@media screen and (min-width: 1200px) {
+    .heading {
+        margin: 0 5rem;
+    }
+
+    .main-inner {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
