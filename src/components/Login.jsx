@@ -86,15 +86,12 @@ const Login = () => {
     const GoogleLogin = () => {
         signInWithPopup(auth, provider)
             .then(async (result) => {
-                // console.log(result.user)
                 const cartRef = doc(db, `UserCart/${result.user.uid}`);
                 let userCart = (await getDoc(cartRef)).data();
-                // console.log(user)
                 if (userCart === undefined) {
                     await setDoc(doc(db, "UserCart", result.user.uid), { cart: [] });
                 } else {
                     let cart = (await getDoc(doc(db, `UserCart/${result.user.uid}`))).data()
-                    console.log(cart.cart)
                     dispatch(getCart(cart.cart))
                 }
                 const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);

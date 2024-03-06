@@ -45,11 +45,11 @@ const Reducer = (state = initial, action) => {
             return { ...state, cart: tempCart };
         case 'getCart':
             // tempCart = ;
-            console.log(action.payload)
+            // console.log(action.payload)
             return { ...state, cart: action.payload };
         case 'setProducts':
             // tempCart = ;
-            console.log(action.payload)
+            // console.log(action.payload)
             return { ...state, products: action.payload };
         default:
             return state

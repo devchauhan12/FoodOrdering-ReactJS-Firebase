@@ -8,10 +8,6 @@ body {
   background-color: rgb(173, 172, 172);
 }
 
-*{
-  text-decoration: none;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

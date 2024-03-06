@@ -12,7 +12,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { db } from './redux/firebase';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
-import { setProducts } from './redux/Action';
+import { getCart, setProducts } from './redux/Action';
 import { Loader } from 'rsuite';
 
 export const authentication = createContext()
@@ -33,20 +33,22 @@ function App() {
     const productRef = collection(db, `Products`)
     let productList = await getDocs(productRef);
     let products = productList.docs.map((item) => {
-      return item.data()
+      return { ...item.data(), id: item.id }
     })
     dispatch(setProducts(products))
-
   }
   const getData = async () => {
     const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
     let user = (await getDoc(userRef)).data().user;
 
+    let cart = (await getDoc(doc(db, `UserCart/${user.uid}`))).data()
+    dispatch(getCart(cart.cart))
+
     if (Object.keys(user).length > 0) {
-      setLogin(true)
       setLogedUser(user)
-      setLoading(false)
+      setLogin(true)
     }
+    setLoading(false)
   }
   return (
     <>
