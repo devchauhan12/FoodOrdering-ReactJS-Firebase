@@ -1,12 +1,23 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { authentication } from '../App'
 import { useDispatch, useSelector } from 'react-redux'
 import { decrementItem, deleteItem, incrementItem } from '../redux/Action'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { db } from '../redux/firebase'
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart)
   const { logedUser, setLogedUser } = useContext(authentication)
   const [UserCart, setUserCart] = useState()
+
+  const fetchUserCart = async () => {
+    const userCartData = (await getDoc(doc(db, `UserCart/${logedUser.uid}`))).data();
+    setUserCart(userCartData);
+  };
+  useEffect(() => {
+    fetchUserCart();
+  });
+
   const dispatch = useDispatch();
   let tq = 0;
   let tp = 0;
@@ -15,27 +26,20 @@ const Cart = () => {
     tp += item.qty * item.price;
   });
   const decreaseQuantity = async (id) => {
-    console.log(logedUser)
-    // UserCart.cart[id].qty--
-    // if (UserCart.cart[id].qty === 0) { UserCart.cart.splice([id], 1) }
-    // setLogedUser(UserCart)
-    // dispatch(decrementItem(id));
-    // await axios.put(`http://localhost:3001/users/${logedUser.id}`, UserCart);
-    // await axios.put(`http://localhost:3001/LoggedIn`, UserCart);
+    UserCart.cart[id].qty--
+    if (UserCart.cart[id].qty === 0) { UserCart.cart.splice([id], 1) }
+    dispatch(decrementItem(id));
+    await setDoc(doc(db, "UserCart", logedUser.uid), UserCart);
   }
   const increaseQuantity = async (id) => {
     UserCart.cart[id].qty++
-    setLogedUser(UserCart)
     dispatch(incrementItem(id));
-    // await axios.put(`http://localhost:3001/users/${logedUser.id}`, UserCart);
-    // await axios.put(`http://localhost:3001/LoggedIn`, UserCart);
+    await setDoc(doc(db, "UserCart", logedUser.uid), UserCart);
   }
   const deleteAll = async () => {
     UserCart.cart = []
-    setLogedUser(UserCart)
     dispatch(deleteItem());
-    // await axios.put(`http://localhost:3001/users/${logedUser.id}`, UserCart);
-    // await axios.put(`http://localhost:3001/LoggedIn`, UserCart);
+    await setDoc(doc(db, "UserCart", logedUser.uid), UserCart);
   }
   return (
     <div>

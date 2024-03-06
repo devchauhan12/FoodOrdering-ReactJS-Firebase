@@ -1,55 +1,38 @@
 import React, { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import '../assets/product.css'
-// import img1 from '../assets/Images/nike-shoes.png'
-import { add, getCart } from '../redux/Action'
+import { add } from '../redux/Action'
 import { authentication } from '../App'
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../redux/firebase'
+import { useNavigate } from 'react-router'
+import '../assets/product.css'
 
 
 const Products = () => {
   const products = useSelector((state) => state.products)
   const cart = useSelector((state) => state.cart)
   const { logedUser, setLogedUser } = useContext(authentication)
+  const navigate = useNavigate()
   const dispatch = useDispatch()
-  // console.log(logedUser);
+
   const handleAdd = async (id) => {
-    // console.log(products[id]);
-    // console.log(id)
-    // if (logedUser) {
-    // const currentUser = await axios.get(`http://localhost:3001/LoggedIn`).then((resp) => resp.data)
-    // let cart1 = [...products]
-    // console.log(cart1)
-    dispatch(add(id));
+    if (logedUser) {
+      const UserCart = (await getDoc(doc(db, `UserCart/${logedUser.uid}`))).data()
 
-    await setDoc(doc(db, "UserCart", logedUser.uid  ), {
-
-    });
-
-    // check();
-
-    // const check = currentUser.cart.some(e => {
-    //   if (e.title === cart[id].title) {
-    //     e.qty += 1;
-    //     return true
-    //   }
-    // })
-    // if (!check) {
-    //   cart = [{ ...cart[id], qty: 1 }]
-    //   currentUser.cart.push(...cart)
-    // }
-
-    // await axios.put(`http://localhost:3001/users/${logedUser.id}`, currentUser);
-    // await axios.put(`http://localhost:3001/LoggedIn`, currentUser);
-    // setLogedUser(currentUser)
-
-    // } else {
-    // navigate('/login')
-    // }
-  }
-  const check = () => {
-    console.log(cart, 'hii')
+      const check = UserCart.cart.some(e => {
+        if (e.id === products[id].id) {
+          e.qty += 1;
+          return true
+        }
+      })
+      if (!check) {
+        UserCart.cart.push({ ...products[id], qty: 1 })
+      }
+      await setDoc(doc(db, "UserCart", logedUser.uid), UserCart);
+      dispatch(add(id));
+    } else {
+      navigate('/login')
+    }
   }
   return (
     <>

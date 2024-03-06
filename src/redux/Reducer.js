@@ -1,12 +1,7 @@
-import img1 from '../assets/Images/nike-shoes.png'
-import img2 from '../assets/Images/adidas-campus.png'
-import img3 from '../assets/Images/Puma.png'
-
 const initial = {
     products: [],
     cart: []
 }
-
 
 const Reducer = (state = initial, action) => {
     let tempCart = [...state.cart]
@@ -44,12 +39,8 @@ const Reducer = (state = initial, action) => {
             tempCart = [];
             return { ...state, cart: tempCart };
         case 'getCart':
-            // tempCart = ;
-            // console.log(action.payload)
             return { ...state, cart: action.payload };
         case 'setProducts':
-            // tempCart = ;
-            // console.log(action.payload)
             return { ...state, products: action.payload };
         default:
             return state

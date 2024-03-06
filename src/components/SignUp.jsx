@@ -1,13 +1,16 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import { app, db } from '../redux/firebase';
 import { createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth';
 import { Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { getCart } from '../redux/Action';
+import { useDispatch } from 'react-redux';
 
 const SignUp = () => {
     const auth = getAuth(app)
+    const dispatch = useDispatch()
 
     const initial = {
         username: '',
@@ -43,7 +46,6 @@ const SignUp = () => {
         if (Object.keys(checkErrors).length > 0) {
             setErrors(checkErrors)
         } else {
-            // checkUser()
             createUserWithEmailAndPassword(auth, input.email, input.password)
                 .then((userCredential) => {
                     updateProfile(auth.currentUser, {
@@ -52,6 +54,7 @@ const SignUp = () => {
                         const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
                         await setDoc(userRef, { user: { uid: auth.currentUser.uid, displayName: input.username, email: input.email } });
                         await setDoc(doc(db, "UserCart", auth.currentUser.uid), { cart: [] });
+                        dispatch(getCart([]))
                     }).catch((error) => {
                         console.log(error)
                     });

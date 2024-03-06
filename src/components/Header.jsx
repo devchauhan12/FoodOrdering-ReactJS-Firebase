@@ -22,9 +22,6 @@ const Header = () => {
         const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
         await setDoc(userRef, { user: {} })
         await signOut(auth)
-        // setLogedUser(null)
-        // axios.put('http://localhost:3001/LoggedIn', {});
-        // dispatch(deleteItem());
         navigate('/')
     }
     return (

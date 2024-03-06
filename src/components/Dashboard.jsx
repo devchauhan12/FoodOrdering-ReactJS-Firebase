@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { db } from '../redux/firebase';
-import { doc, getDoc } from 'firebase/firestore';
 import { authentication } from '../App';
 
 const Dashboard = () => {
