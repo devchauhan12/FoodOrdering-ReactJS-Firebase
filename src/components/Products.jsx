@@ -1,10 +1,42 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import '../assets/product.css'
 // import img1 from '../assets/Images/nike-shoes.png'
+import { add, getCart } from '../redux/Action'
+
 
 const Products = () => {
   const products = useSelector((state) => state.products)
+  const cart = useSelector((state) => state.cart)
+  const dispatch = useDispatch()
+
+  const handleAdd = async (id) => {
+    // if (logedUser) {
+      // const currentUser = await axios.get(`http://localhost:3001/LoggedIn`).then((resp) => resp.data)
+      let cart1 = [...products]
+      console.log(cart1)
+      console.log(cart , 'hii')
+
+      // const check = currentUser.cart.some(e => {
+      //   if (e.title === cart[id].title) {
+      //     e.qty += 1;
+      //     return true
+      //   }
+      // })
+      // if (!check) {
+      //   cart = [{ ...cart[id], qty: 1 }]
+      //   currentUser.cart.push(...cart)
+      // }
+
+      // await axios.put(`http://localhost:3001/users/${logedUser.id}`, currentUser);
+      // await axios.put(`http://localhost:3001/LoggedIn`, currentUser);
+      // setLogedUser(currentUser)
+
+      dispatch(add(id));
+    // } else {
+      // navigate('/login')
+    // }
+  }
   return (
     <>
       <h1 className="heading">Gaming Mouse</h1>
@@ -44,7 +76,7 @@ const Products = () => {
           </div>
         </div> */}
 
-        {products && products.map((item) => {
+        {products && products.map((item,id) => {
           return (<div class="card">
             <div class="imgBox">
               <img src={item.image} alt="mouse corsair" class="mouse" />
@@ -53,7 +85,7 @@ const Products = () => {
             <div class="contentBox">
               <h3>{item.title}</h3>
               <h2 class="price">₹{item.price}</h2>
-              <button href="#" class="buy">Buy Now</button>
+              <button href="#" class="buy" onClick={() => handleAdd(id)}>Buy Now</button>
             </div>
           </div>)
         })}
