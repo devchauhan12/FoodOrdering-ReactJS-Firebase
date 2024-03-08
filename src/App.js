@@ -40,11 +40,12 @@ function App() {
   const getData = async () => {
     const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
     let user = (await getDoc(userRef)).data().user;
-
-    let cart = (await getDoc(doc(db, `UserCart/${user.uid}`))).data()
-    dispatch(getCart(cart.cart))
+    if (user) {
+    }
 
     if (Object.keys(user).length > 0) {
+      let cart = (await getDoc(doc(db, `UserCart/${user.uid}`))).data()
+      dispatch(getCart(cart.cart))
       setLogedUser(user)
       setLogin(true)
     }

@@ -46,6 +46,7 @@ const Login = () => {
         if (Object.keys(checkErrors).length > 0) {
             setErrors(checkErrors)
         } else {
+            console.log(input.email, input.password)
             checkUser()
             setErrors({})
             setInput(initial)

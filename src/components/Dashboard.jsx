@@ -4,7 +4,7 @@ import { authentication } from '../App';
 const Dashboard = () => {
   const { logedUser, setLogedUser } = useContext(authentication)
   return (
-    <div>Welcome {logedUser.displayName}</div>
+    <div>Welcome {logedUser && logedUser.displayName}</div>
   )
 }
 

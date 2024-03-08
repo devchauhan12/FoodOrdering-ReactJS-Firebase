@@ -13,7 +13,7 @@ const Products = () => {
   const products = useSelector((state) => state.products)
   const { logedUser, setLogedUser } = useContext(authentication)
   const [selectedType, setSelectedType] = useState('');
-  const [sortPrice, setSortPrice] = useState(false);
+  const [sortPrice, setSortPrice] = useState(true);
   const [list, setList] = useState(products)
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -27,18 +27,15 @@ const Products = () => {
     setList(search)
   }
 
-  const changeSort = () => {
-    let toSort = setSortPrice(sortPrice === true ? false : true)
-
-  }
-
-
   const handleSort = () => {
     if (sortPrice) {
-      let sorted = products.sort((a, b) => a.price - b.price);
-      setSortPrice(sorted)
+      let newList = [...products]
+      let sorted = newList.sort((a, b) => a.price - b.price);
+      setList(sorted)
+      setSortPrice(false)
     } else {
       setList(products)
+      setSortPrice(true)
     }
   }
 
@@ -91,7 +88,7 @@ const Products = () => {
               <button className={`btn btn-outline-danger ${selectedType === 'Beverages' ? 'active' : ''}`} onClick={() => handleFilterByType('Beverages')}>
                 Beverages
               </button>
-              <button className='btn btn-success' onClick={changeSort}>Sort Price</button>
+              <button className='btn btn-success' onClick={handleSort}>Sort Price</button>
             </div>
           </div>
         </div>

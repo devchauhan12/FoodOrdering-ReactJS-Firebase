@@ -46,7 +46,7 @@ const SignUp = () => {
         if (Object.keys(checkErrors).length > 0) {
             setErrors(checkErrors)
         } else {
-            createUserWithEmailAndPassword(auth, input.email, input.password)
+            await createUserWithEmailAndPassword(auth, input.email, input.password)
                 .then((userCredential) => {
                     updateProfile(auth.currentUser, {
                         displayName: input.username
