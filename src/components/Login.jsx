@@ -46,7 +46,6 @@ const Login = () => {
         if (Object.keys(checkErrors).length > 0) {
             setErrors(checkErrors)
         } else {
-            console.log(input.email, input.password)
             checkUser()
             setErrors({})
             setInput(initial)
@@ -65,7 +64,7 @@ const Login = () => {
                     timer: 1700
                 });
                 const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
-                await setDoc(userRef, { user: { uid: auth.currentUser.uid, displayName: input.username, email: input.email } });
+                await setDoc(userRef, { user: { uid: auth.currentUser.uid, displayName: userCredential.user.displayName, email: input.email } });
                 setLogin(true)
                 navigate('/')
             })

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { decrementItem, deleteItem, incrementItem } from '../redux/Action'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../redux/firebase'
+import Swal from 'sweetalert2'
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart)
@@ -40,6 +41,26 @@ const Cart = () => {
     UserCart.cart = []
     dispatch(deleteItem());
     await setDoc(doc(db, "UserCart", logedUser.uid), UserCart);
+  }
+  const handleCheckOut = async () => {
+    if (cart.length > 0) {
+      Swal.fire({
+        title: "Your food is on the way 😋",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1700
+      });
+      UserCart.cart = []
+      dispatch(deleteItem());
+      await setDoc(doc(db, "UserCart", logedUser.uid), UserCart);
+    } else {
+      Swal.fire({
+        title: "Try Adding Something to Cart. 😉",
+        icon: "info",
+        showConfirmButton: false,
+        timer: 1700
+      });
+    }
   }
   return (
     <div>
@@ -87,13 +108,16 @@ const Cart = () => {
             <th>{tq}</th>
             <th>₹ {tp}</th>
             <th>
-              <button type="submit" onClick={deleteAll} className="border-0">
+              <button type="submit" onClick={deleteAll} className="border btn">
                 Clear All
               </button>
             </th>
           </tr>
         </tfoot>
       </table>
+      <div className='d-flex justify-content-end'>
+        <button className='btn btn-lg btn-success text-white my-3 mx-2 rounded-pill' onClick={handleCheckOut}>Check Out</button>
+      </div>
     </div>
   )
 }

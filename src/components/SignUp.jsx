@@ -48,11 +48,10 @@ const SignUp = () => {
         } else {
             await createUserWithEmailAndPassword(auth, input.email, input.password)
                 .then((userCredential) => {
+                    console.log(userCredential)
                     updateProfile(auth.currentUser, {
                         displayName: input.username
                     }).then(async () => {
-                        const userRef = doc(db, `LoggedIn/pYqMp57QYmsXBFST9RrL`);
-                        await setDoc(userRef, { user: { uid: auth.currentUser.uid, displayName: input.username, email: input.email } });
                         await setDoc(doc(db, "UserCart", auth.currentUser.uid), { cart: [] });
                         dispatch(getCart([]))
                     }).catch((error) => {
