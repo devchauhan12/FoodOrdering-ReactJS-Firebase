@@ -37,110 +37,98 @@ h1 {
     margin-left: 0.45rem;
 }
 
-.card {
-    position: relative;
-    width: 320px;
-    height: 480px;
-    background: #191919;
-    border-radius: 20px;
-    overflow: hidden;
-    /* margin: 0 5rem; */
+.container1 {
+    /* 1140px */
+    max-width: 120rem;
+    padding: 0 3.2rem;
+    margin: 0 auto;
 }
 
-.card::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    width: 100%;
-    height: 100%;
-    background: #ffce00;
-    transform: skewY(345deg);
-    transition: 0.5s;
+.grid {
+    display: grid;
+    column-gap: 6.4rem;
+    row-gap: 9.6rem;
 }
 
-.card:hover::before {
-    top: -70%;
-    transform: skewY(390deg);
+.grid--3-cols {
+    grid-template-columns: repeat(3, 1fr);
 }
 
-.card::after {
-    content: "CORSAIR";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    font-weight: 600;
-    font-size: 6em;
-    color: rgba(0, 0, 0, 0.1);
+.margin-right-md {
+    margin-bottom: 4.8rem !important;
 }
 
-.card .imgBox {
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 20px;
-    z-index: 1;
-}
-
-/*
-  .card .imgBox img {
-      max-width: 100%;
-      
-      transition: .5s;
-  }
-  
-  .card:hover .imgBox img {
-      max-width: 50%;
-        
-  }
-  */
-.card .contentBox {
-    position: relative;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 2;
-}
-
-.card .contentBox h3 {
-    font-size: 18px;
-    color: white;
+strong {
     font-weight: 500;
+}
+
+/***************************/
+/* MEALS SECTION */
+/***************************/
+/* .section-meals {
+    padding: 9.6rem 0;
+} */
+
+.meal {
+    box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
+    border-radius: 11px;
+    overflow: hidden;
+    transition: all 0.4s;
+    background-color: lightcyan;
+}
+
+.meal:hover {
+    transform: translateY(-1.2rem);
+    box-shadow: 0 3.2rem 6.4rem rgba(0, 0, 0, 0.06);
+}
+
+.meal-content {
+    padding: 3rem;
+}
+
+.meal-tags {
+    margin-bottom: 1.2rem;
+    display: flex;
+    gap: 0.4rem;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    font-size: 1.2rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    background-color: #51cf66;
+    color: #333;
+    border-radius: 100px;
+    font-weight: 600;
 }
 
-.card .contentBox .price {
-    font-size: 24px;
-    color: white;
-    font-weight: 700;
-    letter-spacing: 1px;
+.tag--vegan {
+    background-color: #94d82d;
 }
 
-.card .contentBox .buy {
-    position: relative;
-    top: 100px;
-    opacity: 0;
-    padding: 10px 30px;
-    margin-top: 15px;
-    color: #000000;
-    text-decoration: none;
-    background: #ffce00;
-    border-radius: 30px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: 0.5s;
+.meal-title {
+    font-size: 2.4rem;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 3.2rem;
 }
 
-.card:hover .contentBox .buy {
-    top: -10%;
-    opacity: 1;
+.meal-img {
+    width: 100%;
+    height: 224.15px;
+    object-fit: contain;
 }
 
-.mouse {
-    height: 300px;
-    width: auto;
+.btn-default {
+    margin-bottom: 15px;
+    padding: 12px 40px;
+    border-radius: 20px;
+    /* font-size: 12px; */
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(0,0,0,0.04);
+    background-color: #f88e7c;
+    color: #fff;
+    box-shadow: 0 5px 1px rgba(248,142,124,0.7);
 }
