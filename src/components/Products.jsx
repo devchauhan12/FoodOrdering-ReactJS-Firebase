@@ -6,86 +6,47 @@ import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../redux/firebase'
 import { useNavigate } from 'react-router'
 import '../assets/product.css'
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
 
 
 const Products = () => {
   const products = useSelector((state) => state.products)
-  // const cart = useSelector((state) => state.cart)
   const { logedUser, setLogedUser } = useContext(authentication)
-  const [dishes, setDishes] = useState(products)
-  const [cart, setCart] = useState([])
-  const [originalDishes, setOriginalDishes] = useState([]);
-  const [searchDish, setSearchDish] = useState('')
   const [selectedType, setSelectedType] = useState('');
-  const [sortByPrice, setSortByPrice] = useState(false);
-  const [noRecord, setNoRecord] = useState(false)
+  const [sortPrice, setSortPrice] = useState(false);
+  const [list, setList] = useState(products)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  // console.log(dishes);
-
-  useEffect(() => {
-    if (dishes.length === 0) {
-      setNoRecord(true)
-    } else {
-      setNoRecord(false)
-    }
-  }, [dishes])
-
   const handleSearch = (e) => {
-    setSearchDish(e.target.value)
+    let title = e.target.value
+    let search = products
+      .filter(item =>
+        item.title.toLowerCase().includes(title.toLowerCase())
+      )
+    setList(search)
   }
+
+  const changeSort = () => {
+    let toSort = setSortPrice(sortPrice === true ? false : true)
+
+  }
+
 
   const handleSort = () => {
-    setSortByPrice(!sortByPrice);
+    if (sortPrice) {
+      let sorted = products.sort((a, b) => a.price - b.price);
+      setSortPrice(sorted)
+    } else {
+      setList(products)
+    }
   }
 
-  const handleFilterByType = (type) => {
-    setSelectedType(type);
-    if (type === "All") {
-      setDishes(originalDishes);
-    } else {
-      setSelectedType(type);
-      const filteredDishes = originalDishes.filter((dish) =>
-        dish.type.toLowerCase().includes(type.toLowerCase())
-      );
-      setDishes(filteredDishes);
-    }
+  const handleFilterByType = (e) => {
+    let name = e
+    let search = products.filter(item => name === 'All' ? true : item.type === name)
+    setList(search)
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const allDishes = products
-        setOriginalDishes(allDishes);
-
-        let filteredDishes = allDishes;
-
-        if (selectedType !== 'All') {
-          filteredDishes = allDishes.filter((dish) =>
-            dish.type.toLowerCase().includes(selectedType.toLowerCase())
-          );
-        }
-
-        filteredDishes = filteredDishes.filter((dish) =>
-          dish.name.toLowerCase().includes(searchDish.toLowerCase())
-        );
-
-        let sortedDishes = [...filteredDishes];
-
-        if (sortByPrice) {
-          sortedDishes = sortedDishes.sort((a, b) => a.price - b.price);
-        }
-
-        setDishes(sortedDishes);
-      } catch (error) {
-        console.error('Error fetching dishes:', error);
-      }
-    };
-
-    fetchData()
-  }, [searchDish, setDishes, selectedType, sortByPrice])
 
   const handleAdd = async (id) => {
     if (logedUser) {
@@ -112,7 +73,7 @@ const Products = () => {
       <h1 className="heading py-3">Exquisite Meals</h1>
       <div className="filter-area bg-body-secondary rounded-5 mt-4 mb-5 py-2 px-5">
         <div className="d-flex container align-items-center justify-content-between">
-          <input type="text" className='form-control w-25' placeholder='Search Dish...' value={searchDish} onChange={handleSearch} />
+          <input type="text" className='form-control w-25' placeholder='Search Dish...' onChange={handleSearch} />
           <div className="sortbyname">
             <div className="d-flex align-items-center justify-content-Evenly gap-2">
               <button className={`btn btn-outline-danger ${selectedType === 'All' ? 'active' : ''}`} onClick={() => handleFilterByType('All')}>
@@ -130,7 +91,7 @@ const Products = () => {
               <button className={`btn btn-outline-danger ${selectedType === 'Beverages' ? 'active' : ''}`} onClick={() => handleFilterByType('Beverages')}>
                 Beverages
               </button>
-              <button className='btn btn-success' onClick={handleSort}>Sort Price</button>
+              <button className='btn btn-success' onClick={changeSort}>Sort Price</button>
             </div>
           </div>
         </div>
@@ -138,7 +99,7 @@ const Products = () => {
       <div className="container1 d-flex justify-content-around">
         <section className="section-meals">
           <div className="grid grid--3-cols margin-right-md">
-            {products && products.map((item, id) => {
+            {list && list.map((item, id) => {
               return (
                 <div className="meal" key={id}>
                   <img
