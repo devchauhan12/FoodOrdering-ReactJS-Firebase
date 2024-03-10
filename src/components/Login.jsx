@@ -14,6 +14,7 @@ const Login = () => {
     const provider = new GoogleAuthProvider();
     const auth = getAuth(app)
     const { login, setLogin } = useContext(authentication)
+    const { logedUser, setLogedUser } = useContext(authentication)
 
     const initial = {
         email: '',
@@ -103,6 +104,7 @@ const Login = () => {
                     showConfirmButton: false,
                     timer: 1700
                 });
+                setLogedUser({ uid: result.user.uid, displayName: result.user.displayName, email: result.user.email })
                 setLogin(true)
                 navigate('/')
             }).catch((error) => {

@@ -12,7 +12,7 @@ import '../assets/product.css'
 const Products = () => {
   const products = useSelector((state) => state.products)
   const { logedUser, setLogedUser } = useContext(authentication)
-  const [selectedType, setSelectedType] = useState('');
+  const [selectedType, setSelectedType] = useState('All');
   const [sortPrice, setSortPrice] = useState(true);
   const [list, setList] = useState(products)
   const navigate = useNavigate()
@@ -40,6 +40,7 @@ const Products = () => {
   }
 
   const handleFilterByType = (e) => {
+    setSelectedType(e)
     let name = e
     let search = products.filter(item => name === 'All' ? true : item.type === name)
     setList(search)
